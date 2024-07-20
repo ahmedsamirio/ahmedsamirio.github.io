@@ -1,0 +1,1208 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.54">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Ahmed Samir">
+
+<title>Finetuing an Egyptian Arabic Translator – Ahmed Samir</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Ahmed Samir</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com"> <i class="bi bi-twitter" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Finetuing an Egyptian Arabic Translator</h1>
+                      </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Ahmed Samir </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">Invalid Date</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>The following blogpost contains a walkthrough of a recent project that I worked on to learn more about finetuning as part of the <a href="https://maven.com/parlance-labs/fine-tuning"><code>Mastering LLMs: A Conference For Developers &amp; Data Scientists</code></a> course by Hamel Husain and Dan Becker.</p>
+<p>Instruction tuning datasets have become abundant since the release of open source models, and many individual and group attempts have been made to curate and translate these datasets into Arabic.</p>
+<p>Unfortunately, Egyptian Arabic dialect is almost forgotten in these attempts, and this project is an attempt to drive a change in this direction.</p>
+<p>At the moment, you can use a flagship model from either OpenAI or Anthropic to translate from English to Egyptian Arabic and obtain really nice results, but the large cost makes it unfeasible for individuals to translate the available opensource datasets.</p>
+<p>The outcome of this project is creating this translator using open source model to make it easier to translate the massive amounts of data available and integrating the Egyptian Arabic dialect into open source models instruction finetuning.</p>
+</section>
+<section id="outline" class="level1">
+<h1>Outline</h1>
+<section id="the-blogpost-will-be-split-into-3-major-parts" class="level4">
+<h4 class="anchored" data-anchor-id="the-blogpost-will-be-split-into-3-major-parts">The blogpost will be split into 3 major parts:</h4>
+<ol type="1">
+<li>Creating finetuning data using GPT-4o</li>
+<li>Preparing the dataset for finetuning</li>
+<li>Finetuning Llama 3 8B using Axolotl</li>
+<li>Comparing the results before and after finetuning</li>
+</ol>
+</section>
+</section>
+<section id="creating-finetuing-data-using-gpt-4o" class="level1">
+<h1>Creating finetuing data using GPT-4o</h1>
+<p>In order to finetune a translation model, we need to have translation pairs between English and Egyptian Arabic.</p>
+<p>Since my intention with this model was to use it in translating instruction and conversation datasets, I had to choose something to begin with.</p>
+<p>To be honest, I arbitrarly chose the open assistant dataset, and even took a random sample from the messages instead of sampling entire conversations. Anyways, in future iterations on this project, I plan to diversify the sources of translation used for finetuning, for example using different datasets such as alpaca, or using wikipedia articles.</p>
+<div id="cell-7" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> datasets <span class="im">import</span> load_dataset</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Load open assistant 2 dataset</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>ds <span class="op">=</span> load_dataset(<span class="st">"OpenAssistant/oasst2"</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter for only english</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>english_ds <span class="op">=</span> ds.<span class="bu">filter</span>(<span class="kw">lambda</span> x: x[<span class="st">"lang"</span>] <span class="op">==</span> <span class="st">"en"</span>)[<span class="st">"train"</span>]</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Visual check</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(english_ds[<span class="st">"text"</span>][<span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Yes, it's possible to fix runny mayonnaise! The most common reason for mayonnaise becoming runny is because the oil was added too quickly or the egg yolk wasn't emulsified properly. Here are some steps you can take to fix it:
+
+1. Separate another egg yolk and place it in a clean, dry bowl.
+2. Slowly add the runny mayonnaise to the egg yolk while whisking vigorously.
+3. Once all the runny mayonnaise has been added, continue whisking until the mixture has emulsified and thickened.
+4. If the mayonnaise is still too runny, you can add another egg yolk and repeat the process.
+
+If the mayonnaise still won't thicken, you can try adding a small amount of dijon mustard or vinegar to the mixture, which can act as emulsifiers and help stabilize the mayonnaise. It's important to add these ingredients slowly and in small amounts to avoid over-thinning the mixture.</code></pre>
+</div>
+</div>
+<p>While testing GPT-4o for translating from English to Egyptian Arabic, I noticed that GPT-4o tends to generate bad translations if asked to direct translation, which could be mitigated by first translating into Arabic, and then translating into Egyptian Arabic. Therefore, I used GPT-4o to translate the sentence of paragraph into Arabic, and then to Egyptian Arabic.</p>
+<p>You can check the prompt used below.</p>
+<div id="cell-9" class="cell" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>SYSTEM_PROMPT <span class="op">=</span> <span class="st">"""You are an fluent speaker and expert translator for English, Arabic and Egyptian Arabic. </span><span class="ch">\</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="st">Your task is to translate text from English into Egyptian Arabic dialect.</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="st"># Steps to Achieve the Best Results:</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="st">Step 1: Translate the text from English into Modern Standard Arabic.</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="st">Step 2: Translate the text from Modern Standard Arabic into Egyptian dialect.</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="st"># Adhere to the Following Instructions:</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="st">1. **Always follow the steps presented above.**</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="st">2. **Output the two translations as keys in a JSON object:**</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="st">    - "ar" for the Modern Standard Arabic translation.</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="st">    - "eg" for the Egyptian Arabic dialect translation.</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="st">3. **You may change the order of sentences when necessary** to better mimic the style of Arabic and Egyptian dialect.</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="st">4. **Your translation should not be literal**; it should capture the essence of the text.</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="st">5. **Translate specific English terminologies (e.g., science, computer science, biology) or entities </span><span class="ch">\</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="st">(e.g., movies, series, poems, names, programming languages)**, but always keep their original English form within parentheses.</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="st">6. **If the text contains code or is entirely code**, do not translate the code part; write it as it is."""</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>And here, you can see a sample of GPT-4o’s translation using that prompt.</p>
+<div id="cell-11" class="cell" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dotenv <span class="im">import</span> load_dotenv</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> openai <span class="im">import</span> OpenAI</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>load_dotenv()</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>client <span class="op">=</span> OpenAI(api_key<span class="op">=</span>os.getenv(<span class="st">"OPENAI_API_KEY"</span>))</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> client.chat.completions.create(</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  model<span class="op">=</span><span class="st">"gpt-4o"</span>,</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  messages<span class="op">=</span>[{<span class="st">"role"</span>: <span class="st">"system"</span>, <span class="st">"content"</span>: SYSTEM_PROMPT}, </span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>            {<span class="st">"role"</span>: <span class="st">"user"</span>, <span class="st">"content"</span>: <span class="ss">f"Translate the following text:</span><span class="ch">\n</span><span class="sc">{</span>english_ds[<span class="st">"text"</span>][<span class="dv">1</span>]<span class="sc">}</span><span class="ss">"</span>}],</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>  temperature<span class="op">=</span><span class="dv">1</span>,</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>  max_tokens<span class="op">=</span><span class="dv">512</span>,</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>  top_p<span class="op">=</span><span class="dv">1</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response.choices[<span class="dv">0</span>].message.content)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>```json
+{
+  "ar": "نعم، من الممكن إصلاح المايونيز السائل! السبب الأكثر شيوعًا لأن يصبح المايونيز سائلاً هو أن الزيت أضيف بسرعة كبيرة أو أن صفار البيض لم يتم استحلابه بشكل صحيح. إليك بعض الخطوات التي يمكنك اتباعها لإصلاحه:
+
+1. افصل صفار بيضة أخرى وضعه في وعاء نظيف وجاف.
+2. أضف المايونيز السائل تدريجياً إلى صفار البيض مع الخفق بقوة.
+3. بمجرد إضافة كل المايونيز السائل، استمر في الخفق حتى يتم استحلاب الخليط ويثخن.
+4. إذا كان المايونيز لا يزال سائلاً جدًا، يمكنك إضافة صفار بيضة أخرى وتكرار العملية.
+
+إذا لم يثخن المايونيز بعد، يمكنك محاولة إضافة كمية صغيرة من خردل (dijon) أو خل إلى الخليط، حيث يمكن أن تعمل كمستحلبات وتساعد في تثبيت المايونيز. من المهم إضافة هذه المكونات ببطء وبكميات صغيرة لتجنب تخفيف الخليط بشكل زائد.",
+  
+  "eg": "أيوه، ممكن تصلح المايونيز السايل! أكتر سبب بيخلي المايونيز يبقى سايل هو إن الزيت أضيف بسرعة أو إن صفار البيض مش متجانس كويس. دي شوية خطوات ممكن تعملها لتصلح المشكلة:
+
+1. اعزل صفار بيضة تانية وحطه في طبق نضيف وجاف.
+2. أضف المايونيز السايل تدريجياً لصفار البيض وأنت بتخفق بكل قوة.
+3. لما تضيف كل المايونيز السايل، كمل في الخفق لحد ما الخليط يتجانس ويكثف.
+4. لو المايونيز لسه سايل جداً، ممكن تضيف صفار بيضة تانية وتكرر العملية.
+
+لو المايونيز لسه مش عايز يثخن، جرب تضيف شوية من خردل (dijon) أو خل للخليط، دول بيساعدوا في تجانس المايونيز. المهم تضيف المكونات دي ببطء وبكميات صغيرة عشان ما تدفيش الخليط." 
+}
+```</code></pre>
+</div>
+</div>
+<p>After developing the prompt, I utilized the openai batch api to directly translate a sample of 10K messages from the dataset as follows.</p>
+<p>The following snippet simply does 3 things: 1. It generate 10 separate jsonl files, where each file contains prompts separate requests for translating different messages. 2. It submits these jsonl files to openai’s batch api 3. It downloads their results</p>
+<div id="cell-13" class="cell" data-execution_count="20">
+<div class="cell-output cell-output-stdout">
+<pre><code>Downloading (0, 999) batch outputs
+Downloading (1000, 1999) batch outputs
+Downloading (2000, 2999) batch outputs
+Downloading (3000, 3999) batch outputs
+Downloading (4000, 4999) batch outputs
+Downloading (5000, 5999) batch outputs
+Downloading (6000, 6999) batch outputs
+Downloading (7000, 7999) batch outputs
+Downloading (8000, 8999) batch outputs
+Downloading (9000, 9999) batch outputs</code></pre>
+</div>
+</div>
+</section>
+<section id="preparing-the-dataset-for-finetuning" class="level1">
+<h1>Preparing the dataset for finetuning</h1>
+<p>The output from the previous step consists of separate jsonl files, where each files contains the output for a specific batch. In order to proceed to the finetuning part, we need to process this output into a suitable format that we can deal with.</p>
+<p>Let’s take a look into the batch inputs and outputs.</p>
+<div id="cell-16" class="cell" data-execution_count="22">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">'data/batch_api_input_0_999.jsonl'</span>) <span class="im">as</span> f:</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    english <span class="op">=</span> [json.loads(line) <span class="cf">for</span> line <span class="kw">in</span> f]</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">'data/batch_output_0_999.jsonl'</span>) <span class="im">as</span> f:</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    translations <span class="op">=</span> [json.loads(line) <span class="cf">for</span> line <span class="kw">in</span> f]</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>english[:<span class="dv">1</span>], translations[:<span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="22">
+<pre><code>([{'custom_id': '0',
+   'method': 'POST',
+   'url': '/v1/chat/completions',
+   'body': {'model': 'gpt-4o',
+    'messages': [{'role': 'system',
+      'content': 'You are an fluent speaker and expert translator for English, Arabic and Egyptian Arabic. Your task is to translate text from English into Egyptian Arabic dialect.\n\n# Steps to Achieve the Best Results:\nStep 1: Translate the text from English into Modern Standard Arabic.\nStep 2: Translate the text from Modern Standard Arabic into Egyptian dialect.\n\n# Adhere to the Following Instructions:\n1. **Always follow the steps presented above.**\n2. **Output the two translations as keys in a JSON object:**\n    - "ar" for the Modern Standard Arabic translation.\n    - "eg" for the Egyptian Arabic dialect translation.\n3. **You may change the order of sentences when necessary** to better mimic the style of Arabic and Egyptian dialect.\n4. **Your translation should not be literal**; it should capture the essence of the text.\n5. **Translate specific English terminologies (e.g., science, computer science, biology) or entities (e.g., movies, series, poems, names, programming languages)**, but always keep their original English form within parentheses.\n6. **If the text contains code or is entirely code**, do not translate the code part; write it as it is.'},
+     {'role': 'user',
+      'content': "Translate the following text:\nThanks for the list! I'm especially interested in how these women overcame obstacles in their lives. Are there any resources you can recommend for learning more about their stories?"}],
+    'temperature': 1,
+    'top_p': 1,
+    'max_tokens': 2048}}],
+ [{'id': 'batch_req_tuugwkbZhxWZ7fKL5YRQWvHP',
+   'custom_id': '0',
+   'response': {'status_code': 200,
+    'request_id': '161ad42423c0ecf010ce879f31e50e5d',
+    'body': {'id': 'chatcmpl-9b76MvbpkO4dfI8dQLWOPFEPo1dZC',
+     'object': 'chat.completion',
+     'created': 1718632462,
+     'model': 'gpt-4o-2024-05-13',
+     'choices': [{'index': 0,
+       'message': {'role': 'assistant',
+        'content': '```json\n{\n  "msa": "شكرًا على القائمة! أنا مهتم بشكل خاص في كيفية تغلب هؤلاء النساء على العقبات في حياتهن. هل هناك أي موارد يمكنك أن توصي بها لمعرفة المزيد عن قصصهن؟",\n  "ea": "شكرًا على القائمة! أنا مهتمة بالذات أعرف إزاي الستات دول قدروا يعدوا العقبات اللي في حياتهم. في مصادر تنصحني بيها عشان أتعرف أكتر على حكاويهم؟"\n}\n```'},
+       'logprobs': None,
+       'finish_reason': 'stop'}],
+     'usage': {'prompt_tokens': 290,
+      'completion_tokens': 109,
+      'total_tokens': 399},
+     'system_fingerprint': 'fp_319be4768e'}},
+   'error': None}])</code></pre>
+</div>
+</div>
+<p>So for each sample in these batch files, we need to extract the English text used for translation, and the JSON output from GPT-4o, and parse out the Arabic and Egyptian Arabic translations.</p>
+<p>For each triplet, I create 6 translation pairs: 1. Arabic to English 2. Egyptian Arabic to English 3. English to Arabic 4. Egyptian Arabic to Arabic 5. English to Egyptian Arabic 6. Arabic to Egyptian Arabic</p>
+<p>The main purpose of the model was to translate from English to Egyptian Arabic, but I though that including the back translation could enhance the model capabilities, and also produce the bridge of translating from English to Arabic, and from Arabic to Egyptian Arabic, which proved to do well with GPT-4o.</p>
+<div id="cell-18" class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> glob</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> convert_text_to_dict(text):</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Remove the '```json' and '```' delimiters</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    cleaned_text <span class="op">=</span> text.replace(<span class="st">'```json</span><span class="ch">\n</span><span class="st">'</span>, <span class="st">''</span>).replace(<span class="st">'```'</span>, <span class="st">''</span>).strip()</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Convert the cleaned text into a dictionary, ensuring it does not error out</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>        result_dict <span class="op">=</span> json.loads(cleaned_text, strict<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> json.JSONDecodeError <span class="im">as</span> e:</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"JSON Decode Error:"</span>, e)</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Attempt to clean the text further or handle specific issues</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>        cleaned_text <span class="op">=</span> cleaned_text.replace(<span class="st">'</span><span class="ch">\n</span><span class="st">'</span>, <span class="st">'</span><span class="ch">\\</span><span class="st">n'</span>).replace(<span class="st">'</span><span class="ch">\\</span><span class="st">"'</span>, <span class="st">'"'</span>).replace(<span class="st">'</span><span class="ch">\\\'</span><span class="st">'</span>, <span class="st">"'"</span>)</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">try</span>:</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>            result_dict <span class="op">=</span> json.loads(cleaned_text, strict<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>        <span class="cf">except</span> json.JSONDecodeError <span class="im">as</span> e:</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="st">"JSON Decode Error after further cleaning:"</span>, e)</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="va">None</span></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> result_dict</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>input_files <span class="op">=</span> <span class="bu">sorted</span>(glob.glob(<span class="st">"data/batch_api_input*"</span>))</span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>output_files <span class="op">=</span> <span class="bu">sorted</span>(glob.glob(<span class="st">"data/batch_output*"</span>))</span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>english <span class="op">=</span> []</span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>translations <span class="op">=</span> []</span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> input_file <span class="kw">in</span> input_files:</span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(input_file) <span class="im">as</span> f:</span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a>        english.extend([json.loads(line) <span class="cf">for</span> line <span class="kw">in</span> f])</span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> output_file <span class="kw">in</span> output_files:</span>
+<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(output_file) <span class="im">as</span> f:</span>
+<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a>        translations.extend([json.loads(line) <span class="cf">for</span> line <span class="kw">in</span> f])</span>
+<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> []</span>
+<span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a>fail <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a>i <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb9-40"><a href="#cb9-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-41"><a href="#cb9-41" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> english_data, arabic_data <span class="kw">in</span> tqdm(<span class="bu">zip</span>(english, translations)):</span>
+<span id="cb9-42"><a href="#cb9-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-43"><a href="#cb9-43" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
+<span id="cb9-44"><a href="#cb9-44" aria-hidden="true" tabindex="-1"></a>        output_dict <span class="op">=</span> convert_text_to_dict(arabic_data[<span class="st">'response'</span>][<span class="st">'body'</span>][<span class="st">'choices'</span>][<span class="dv">0</span>][<span class="st">'message'</span>][<span class="st">'content'</span>])</span>
+<span id="cb9-45"><a href="#cb9-45" aria-hidden="true" tabindex="-1"></a>        ar_text <span class="op">=</span> output_dict[<span class="st">'ar'</span>]</span>
+<span id="cb9-46"><a href="#cb9-46" aria-hidden="true" tabindex="-1"></a>        eg_text <span class="op">=</span> output_dict[<span class="st">'eg'</span>]</span>
+<span id="cb9-47"><a href="#cb9-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-48"><a href="#cb9-48" aria-hidden="true" tabindex="-1"></a>        en_text <span class="op">=</span> english_data[<span class="st">'body'</span>][<span class="st">'messages'</span>][<span class="op">-</span><span class="dv">1</span>][<span class="st">'content'</span>].split(<span class="st">'Translate the following text:</span><span class="ch">\n</span><span class="st">'</span>)[<span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb9-49"><a href="#cb9-49" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb9-50"><a href="#cb9-50" aria-hidden="true" tabindex="-1"></a>        data.append({<span class="st">"instruction"</span>: <span class="st">"Translate the following text to English."</span>,</span>
+<span id="cb9-51"><a href="#cb9-51" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"input"</span>: ar_text,</span>
+<span id="cb9-52"><a href="#cb9-52" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"output"</span>: en_text,</span>
+<span id="cb9-53"><a href="#cb9-53" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"input_lang"</span>: <span class="st">"ar"</span>,</span>
+<span id="cb9-54"><a href="#cb9-54" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"output_lang"</span>: <span class="st">"en"</span>,</span>
+<span id="cb9-55"><a href="#cb9-55" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"id"</span>: i})</span>
+<span id="cb9-56"><a href="#cb9-56" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb9-57"><a href="#cb9-57" aria-hidden="true" tabindex="-1"></a>        data.append({<span class="st">"instruction"</span>: <span class="st">"Translate the following text to English."</span>,</span>
+<span id="cb9-58"><a href="#cb9-58" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"input"</span>: eg_text,</span>
+<span id="cb9-59"><a href="#cb9-59" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"output"</span>: en_text,</span>
+<span id="cb9-60"><a href="#cb9-60" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"input_lang"</span>: <span class="st">"eg"</span>,</span>
+<span id="cb9-61"><a href="#cb9-61" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"output_lang"</span>: <span class="st">"en"</span>,</span>
+<span id="cb9-62"><a href="#cb9-62" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"id"</span>: i})</span>
+<span id="cb9-63"><a href="#cb9-63" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb9-64"><a href="#cb9-64" aria-hidden="true" tabindex="-1"></a>        data.append({<span class="st">"instruction"</span>: <span class="st">"Translate the following text to Arabic."</span>,</span>
+<span id="cb9-65"><a href="#cb9-65" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"input"</span>: eg_text,</span>
+<span id="cb9-66"><a href="#cb9-66" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"output"</span>: ar_text,</span>
+<span id="cb9-67"><a href="#cb9-67" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"input_lang"</span>: <span class="st">"eg"</span>,</span>
+<span id="cb9-68"><a href="#cb9-68" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"output_lang"</span>: <span class="st">"ar"</span>,</span>
+<span id="cb9-69"><a href="#cb9-69" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"id"</span>: i})</span>
+<span id="cb9-70"><a href="#cb9-70" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb9-71"><a href="#cb9-71" aria-hidden="true" tabindex="-1"></a>        data.append({<span class="st">"instruction"</span>: <span class="st">"Translate the following text to Arabic."</span>,</span>
+<span id="cb9-72"><a href="#cb9-72" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"input"</span>: en_text,</span>
+<span id="cb9-73"><a href="#cb9-73" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"output"</span>: ar_text,</span>
+<span id="cb9-74"><a href="#cb9-74" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"input_lang"</span>: <span class="st">"en"</span>,</span>
+<span id="cb9-75"><a href="#cb9-75" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"output_lang"</span>: <span class="st">"ar"</span>,</span>
+<span id="cb9-76"><a href="#cb9-76" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"id"</span>: i})</span>
+<span id="cb9-77"><a href="#cb9-77" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb9-78"><a href="#cb9-78" aria-hidden="true" tabindex="-1"></a>        data.append({<span class="st">"instruction"</span>: <span class="st">"Translate the following text to Egyptian Arabic."</span>,</span>
+<span id="cb9-79"><a href="#cb9-79" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"input"</span>: ar_text,</span>
+<span id="cb9-80"><a href="#cb9-80" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"output"</span>: eg_text,</span>
+<span id="cb9-81"><a href="#cb9-81" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"input_lang"</span>: <span class="st">"ar"</span>,</span>
+<span id="cb9-82"><a href="#cb9-82" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"output_lang"</span>: <span class="st">"eg"</span>,</span>
+<span id="cb9-83"><a href="#cb9-83" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"id"</span>: i})</span>
+<span id="cb9-84"><a href="#cb9-84" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb9-85"><a href="#cb9-85" aria-hidden="true" tabindex="-1"></a>        data.append({<span class="st">"instruction"</span>: <span class="st">"Translate the following text to Egyptian Arabic."</span>,</span>
+<span id="cb9-86"><a href="#cb9-86" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"input"</span>: en_text,</span>
+<span id="cb9-87"><a href="#cb9-87" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"output"</span>: eg_text,</span>
+<span id="cb9-88"><a href="#cb9-88" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"input_lang"</span>: <span class="st">"en"</span>,</span>
+<span id="cb9-89"><a href="#cb9-89" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"output_lang"</span>: <span class="st">"eg"</span>,</span>
+<span id="cb9-90"><a href="#cb9-90" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"id"</span>: i})</span>
+<span id="cb9-91"><a href="#cb9-91" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb9-92"><a href="#cb9-92" aria-hidden="true" tabindex="-1"></a>        i <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb9-93"><a href="#cb9-93" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb9-94"><a href="#cb9-94" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span>:</span>
+<span id="cb9-95"><a href="#cb9-95" aria-hidden="true" tabindex="-1"></a>        fail <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb9-96"><a href="#cb9-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-97"><a href="#cb9-97" aria-hidden="true" tabindex="-1"></a> <span class="co"># Write jsonl file</span></span>
+<span id="cb9-98"><a href="#cb9-98" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"data/translation-dataset-openai-10k.jsonl"</span>, <span class="st">'w'</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
+<span id="cb9-99"><a href="#cb9-99" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> index <span class="kw">in</span> tqdm(<span class="bu">range</span>(<span class="dv">0</span>, <span class="bu">len</span>(data)), desc<span class="op">=</span><span class="st">"Generating JSONL File"</span>):</span>
+<span id="cb9-100"><a href="#cb9-100" aria-hidden="true" tabindex="-1"></a>        row <span class="op">=</span> data[index]</span>
+<span id="cb9-101"><a href="#cb9-101" aria-hidden="true" tabindex="-1"></a>        <span class="bu">file</span>.write(json.dumps(row) <span class="op">+</span> <span class="st">'</span><span class="ch">\n</span><span class="st">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Due to some JSON parsing errors, the final datasset was around 57K rows instead of 60K.</p>
+<p>The next step was to split this dataset into train and test, in order to be able to validate the performance of the model after finetuning.</p>
+<div id="cell-20" class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> random</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>random.seed(<span class="dv">42</span>)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Path to your .jsonl file</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>dataset_path <span class="op">=</span> <span class="st">'data/translation-dataset-openai-10k.jsonl'</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>train_dataset_path <span class="op">=</span> <span class="st">'data/translation-dataset-openai-10k-train.jsonl'</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>test_dataset_path <span class="op">=</span> <span class="st">'data/translation-dataset-openai-10k-test.jsonl'</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize an empty list to store the data</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>train_data_list <span class="op">=</span> []</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>test_data_list <span class="op">=</span> []</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Open the file and read line by line</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(dataset_path, <span class="st">'r'</span>, encoding<span class="op">=</span><span class="st">'utf-8'</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Sample test ids</span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>    lines <span class="op">=</span> <span class="bu">file</span>.readlines()</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>    test_ids <span class="op">=</span> random.sample(<span class="bu">list</span>(<span class="bu">range</span>(<span class="bu">len</span>(lines))), k<span class="op">=</span><span class="bu">len</span>(lines)<span class="op">//</span><span class="dv">10</span>)</span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> line <span class="kw">in</span> lines:</span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>        data <span class="op">=</span> json.loads(line.strip())  <span class="co"># Parse JSON from each line</span></span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> data[<span class="st">"id"</span>] <span class="kw">in</span> test_ids:</span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>            test_data_list.append(line)</span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>            train_data_list.append(line)</span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>train_data_list <span class="op">=</span> <span class="bu">list</span>([json.loads(l.strip()) <span class="cf">for</span> l <span class="kw">in</span> <span class="bu">set</span>(train_data_list)])</span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>test_data_list <span class="op">=</span> <span class="bu">list</span>([json.loads(l.strip()) <span class="cf">for</span> l <span class="kw">in</span> <span class="bu">set</span>(test_data_list)])</span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(train_dataset_path, <span class="st">'w'</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
+<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> index <span class="kw">in</span> tqdm(<span class="bu">range</span>(<span class="dv">0</span>, <span class="bu">len</span>(train_data_list)), desc<span class="op">=</span><span class="st">"Generating Train JSONL File"</span>):</span>
+<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a>        row <span class="op">=</span> train_data_list[index]</span>
+<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a>        <span class="bu">file</span>.write(json.dumps(row) <span class="op">+</span> <span class="st">'</span><span class="ch">\n</span><span class="st">'</span>)</span>
+<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(test_dataset_path, <span class="st">'w'</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
+<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> index <span class="kw">in</span> tqdm(<span class="bu">range</span>(<span class="dv">0</span>, <span class="bu">len</span>(test_data_list)), desc<span class="op">=</span><span class="st">"Generating Train JSONL File"</span>):</span>
+<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a>        row <span class="op">=</span> test_data_list[index]</span>
+<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a>        <span class="bu">file</span>.write(json.dumps(row) <span class="op">+</span> <span class="st">'</span><span class="ch">\n</span><span class="st">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>And the final part was to convert these train and test sets into HuggingFace datasets, so that we can easily use them in Axolotl.</p>
+<div id="cell-22" class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> datasets <span class="im">import</span> Dataset</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>train_dataset_df <span class="op">=</span> pd.read_json(train_dataset_path, lines<span class="op">=</span><span class="va">True</span>).astype(<span class="bu">str</span>)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>test_dataset_df <span class="op">=</span> pd.read_json(test_dataset_path, lines<span class="op">=</span><span class="va">True</span>).astype(<span class="bu">str</span>)</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>train_dataset <span class="op">=</span> Dataset.from_pandas(train_dataset_df)</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>test_dataset <span class="op">=</span> Dataset.from_pandas(test_dataset_df)</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>train_dataset.save_to_disk(<span class="st">'translation-dataset-v3-train.hf'</span>)</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>test_dataset.save_to_disk(<span class="st">'translation-dataset-v3-test.hf'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="finetuning-llama-3-8b-using-axolotl" class="level1">
+<h1>Finetuning Llama 3 8B using Axolotl</h1>
+<p>To give you a brief intro about Axolotl, it is a tool designed to streamline LLM finetuning. I like Axolotl because it lets you focus on the data instead of focusing on the finetuning code, while having the best finetuning practicies built-in.</p>
+<p>In this project, I used a pretty simple finetuning configuration that I’ll provide below. To summarize what the configuration entails: 1. It loads a Llama 3 8B in 8bit 2. It uses the <a href="https://github.com/tatsu-lab/stanford_alpaca">alpaca format</a> for finetuning 3. It finetunes a <a href="https://sebastianraschka.com/blog/2023/llm-finetuning-lora.html">LoRA</a> adapter instead of doing a full finetune 4. It uses <a href="https://axolotl-ai-cloud.github.io/axolotl/docs/multipack.html">sample packing</a> to improve finetuning efficiency 5. It trains the model for 2 epochs, while running 10 evals per epoch 6. It logs the train and eval loss into weights and biases</p>
+<p>The finetuning was carried out on a single A5000 GPU (24 GB VRAM) on <a href="https://jarvislabs.ai/">Jarvis Labs</a> that costs 0.49$/hr, and took around 10 hours to complete. You can check the weights and biases log over <a href="https://wandb.ai/ahmedsamirio/en_eg_translator/runs/hwzxxt0r">here</a>.</p>
+<p>For more info about Axolotl, I highly recommend the <a href="https://axolotl-ai-cloud.github.io/axolotl/">documentation</a>, and checking this <a href="https://www.youtube.com/watch?v=HAYPoeC41fw">short video guide</a> by <a href="https://jarvislabs.ai/">Jarvis Labs</a> that shows how to spin up an instance that uses axolotl over there.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">base_model</span><span class="kw">:</span><span class="at"> meta-llama/Meta-Llama-3-8B</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">model_type</span><span class="kw">:</span><span class="at"> LlamaForCausalLM</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tokenizer_type</span><span class="kw">:</span><span class="at"> AutoTokenizer</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="fu">load_in_8bit</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="fu">load_in_4bit</span><span class="kw">:</span><span class="at"> </span><span class="ch">false</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="fu">strict</span><span class="kw">:</span><span class="at"> </span><span class="ch">false</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="fu">datasets</span><span class="kw">:</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">path</span><span class="kw">:</span><span class="at"> translation-dataset-v3-train.hf</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">type</span><span class="kw">:</span><span class="at"> alpaca</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">train_on_split</span><span class="kw">:</span><span class="at"> train</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="fu">test_datasets</span><span class="kw">:</span></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">path</span><span class="kw">:</span><span class="at"> translation-dataset-v3-test.hf</span></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">type</span><span class="kw">:</span><span class="at"> alpaca</span></span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">split</span><span class="kw">:</span><span class="at"> train</span></span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a><span class="fu">dataset_prepared_path</span><span class="kw">:</span><span class="at"> ./last_run_prepared</span></span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a><span class="fu">output_dir</span><span class="kw">:</span><span class="at"> ./llama_3_translator</span></span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a><span class="fu">hub_model_id</span><span class="kw">:</span><span class="at"> ahmedsamirio/llama_3_translator_v3</span></span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a><span class="fu">sequence_len</span><span class="kw">:</span><span class="at"> </span><span class="dv">2048</span></span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a><span class="fu">sample_packing</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a><span class="fu">pad_to_sequence_len</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a><span class="fu">eval_sample_packing</span><span class="kw">:</span><span class="at"> </span><span class="ch">false</span></span>
+<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a><span class="fu">adapter</span><span class="kw">:</span><span class="at"> lora</span></span>
+<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a><span class="fu">lora_r</span><span class="kw">:</span><span class="at"> </span><span class="dv">32</span></span>
+<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a><span class="fu">lora_alpha</span><span class="kw">:</span><span class="at"> </span><span class="dv">16</span></span>
+<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a><span class="fu">lora_dropout</span><span class="kw">:</span><span class="at"> </span><span class="fl">0.05</span></span>
+<span id="cb12-33"><a href="#cb12-33" aria-hidden="true" tabindex="-1"></a><span class="fu">lora_target_linear</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb12-34"><a href="#cb12-34" aria-hidden="true" tabindex="-1"></a><span class="fu">lora_fan_in_fan_out</span><span class="kw">:</span></span>
+<span id="cb12-35"><a href="#cb12-35" aria-hidden="true" tabindex="-1"></a><span class="fu">lora_target_modules</span><span class="kw">:</span></span>
+<span id="cb12-36"><a href="#cb12-36" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> gate_proj</span></span>
+<span id="cb12-37"><a href="#cb12-37" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> down_proj</span></span>
+<span id="cb12-38"><a href="#cb12-38" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> up_proj</span></span>
+<span id="cb12-39"><a href="#cb12-39" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> q_proj</span></span>
+<span id="cb12-40"><a href="#cb12-40" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> v_proj</span></span>
+<span id="cb12-41"><a href="#cb12-41" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> k_proj</span></span>
+<span id="cb12-42"><a href="#cb12-42" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> o_proj</span></span>
+<span id="cb12-43"><a href="#cb12-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-44"><a href="#cb12-44" aria-hidden="true" tabindex="-1"></a><span class="fu">wandb_project</span><span class="kw">:</span><span class="at"> en_eg_translator</span></span>
+<span id="cb12-45"><a href="#cb12-45" aria-hidden="true" tabindex="-1"></a><span class="fu">wandb_entity</span><span class="kw">:</span><span class="at"> ahmedsamirio</span></span>
+<span id="cb12-46"><a href="#cb12-46" aria-hidden="true" tabindex="-1"></a><span class="fu">wandb_name</span><span class="kw">:</span><span class="at"> llama_3_en_eg_translator_v3</span></span>
+<span id="cb12-47"><a href="#cb12-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-48"><a href="#cb12-48" aria-hidden="true" tabindex="-1"></a><span class="fu">gradient_accumulation_steps</span><span class="kw">:</span><span class="at"> </span><span class="dv">4</span></span>
+<span id="cb12-49"><a href="#cb12-49" aria-hidden="true" tabindex="-1"></a><span class="fu">micro_batch_size</span><span class="kw">:</span><span class="at"> </span><span class="dv">2</span></span>
+<span id="cb12-50"><a href="#cb12-50" aria-hidden="true" tabindex="-1"></a><span class="fu">num_epochs</span><span class="kw">:</span><span class="at"> </span><span class="dv">2</span></span>
+<span id="cb12-51"><a href="#cb12-51" aria-hidden="true" tabindex="-1"></a><span class="fu">optimizer</span><span class="kw">:</span><span class="at"> paged_adamw_32bit</span></span>
+<span id="cb12-52"><a href="#cb12-52" aria-hidden="true" tabindex="-1"></a><span class="fu">lr_scheduler</span><span class="kw">:</span><span class="at"> cosine</span></span>
+<span id="cb12-53"><a href="#cb12-53" aria-hidden="true" tabindex="-1"></a><span class="fu">learning_rate</span><span class="kw">:</span><span class="at"> </span><span class="fl">2e-5</span></span>
+<span id="cb12-54"><a href="#cb12-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-55"><a href="#cb12-55" aria-hidden="true" tabindex="-1"></a><span class="fu">train_on_inputs</span><span class="kw">:</span><span class="at"> </span><span class="ch">false</span></span>
+<span id="cb12-56"><a href="#cb12-56" aria-hidden="true" tabindex="-1"></a><span class="fu">group_by_length</span><span class="kw">:</span><span class="at"> </span><span class="ch">false</span></span>
+<span id="cb12-57"><a href="#cb12-57" aria-hidden="true" tabindex="-1"></a><span class="fu">bf16</span><span class="kw">:</span><span class="at"> auto</span></span>
+<span id="cb12-58"><a href="#cb12-58" aria-hidden="true" tabindex="-1"></a><span class="fu">fp16</span><span class="kw">:</span></span>
+<span id="cb12-59"><a href="#cb12-59" aria-hidden="true" tabindex="-1"></a><span class="fu">tf32</span><span class="kw">:</span><span class="at"> </span><span class="ch">false</span></span>
+<span id="cb12-60"><a href="#cb12-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-61"><a href="#cb12-61" aria-hidden="true" tabindex="-1"></a><span class="fu">gradient_checkpointing</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb12-62"><a href="#cb12-62" aria-hidden="true" tabindex="-1"></a><span class="fu">early_stopping_patience</span><span class="kw">:</span></span>
+<span id="cb12-63"><a href="#cb12-63" aria-hidden="true" tabindex="-1"></a><span class="fu">resume_from_checkpoint</span><span class="kw">:</span></span>
+<span id="cb12-64"><a href="#cb12-64" aria-hidden="true" tabindex="-1"></a><span class="fu">local_rank</span><span class="kw">:</span></span>
+<span id="cb12-65"><a href="#cb12-65" aria-hidden="true" tabindex="-1"></a><span class="fu">logging_steps</span><span class="kw">:</span><span class="at"> </span><span class="dv">1</span></span>
+<span id="cb12-66"><a href="#cb12-66" aria-hidden="true" tabindex="-1"></a><span class="fu">xformers_attention</span><span class="kw">:</span></span>
+<span id="cb12-67"><a href="#cb12-67" aria-hidden="true" tabindex="-1"></a><span class="fu">flash_attention</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb12-68"><a href="#cb12-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-69"><a href="#cb12-69" aria-hidden="true" tabindex="-1"></a><span class="fu">warmup_steps</span><span class="kw">:</span><span class="at"> </span><span class="dv">10</span></span>
+<span id="cb12-70"><a href="#cb12-70" aria-hidden="true" tabindex="-1"></a><span class="fu">evals_per_epoch</span><span class="kw">:</span><span class="at"> </span><span class="dv">10</span></span>
+<span id="cb12-71"><a href="#cb12-71" aria-hidden="true" tabindex="-1"></a><span class="fu">eval_table_size</span><span class="kw">:</span></span>
+<span id="cb12-72"><a href="#cb12-72" aria-hidden="true" tabindex="-1"></a><span class="fu">eval_max_new_tokens</span><span class="kw">:</span><span class="at"> </span><span class="dv">128</span></span>
+<span id="cb12-73"><a href="#cb12-73" aria-hidden="true" tabindex="-1"></a><span class="fu">saves_per_epoch</span><span class="kw">:</span><span class="at"> </span><span class="dv">1</span></span>
+<span id="cb12-74"><a href="#cb12-74" aria-hidden="true" tabindex="-1"></a><span class="fu">debug</span><span class="kw">:</span></span>
+<span id="cb12-75"><a href="#cb12-75" aria-hidden="true" tabindex="-1"></a><span class="fu">deepspeed</span><span class="kw">:</span></span>
+<span id="cb12-76"><a href="#cb12-76" aria-hidden="true" tabindex="-1"></a><span class="fu">weight_decay</span><span class="kw">:</span><span class="at"> </span><span class="fl">0.0</span></span>
+<span id="cb12-77"><a href="#cb12-77" aria-hidden="true" tabindex="-1"></a><span class="fu">fsdp</span><span class="kw">:</span></span>
+<span id="cb12-78"><a href="#cb12-78" aria-hidden="true" tabindex="-1"></a><span class="fu">fsdp_config</span><span class="kw">:</span></span>
+<span id="cb12-79"><a href="#cb12-79" aria-hidden="true" tabindex="-1"></a><span class="fu">special_tokens</span><span class="kw">:</span></span>
+<span id="cb12-80"><a href="#cb12-80" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">pad_token</span><span class="kw">:</span><span class="at"> &lt;|end_of_text|&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="comparing-the-finetuned-model-with-gpt-4o" class="level1">
+<h1>Comparing the finetuned model with GPT-4o</h1>
+<p>Of course, the comparison here will go in facor of GPT-4o, but since we were aiming to emulate it’s performance, let’s make a comparison to see how far off our finetuned model is.</p>
+<p>I’ll use three random sample responses from the <a href="https://huggingface.co/datasets/tatsu-lab/alpaca">alpaca dataset</a>.</p>
+<div id="cell-28" class="cell" data-execution_count="79">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>alpaca_sample <span class="op">=</span> [</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"""I had to make a difficult decision when I was working as a project manager at a construction company. I was in charge of a project that needed to be completed by a certain date in order to meet the client’s expectations. However, due to unexpected delays, we were not able to meet the deadline and so I had to make a difficult decision. I decided to extend the deadline, but I had to stretch the team’s resources even further and increase the budget. Although it was a risky decision, I ultimately decided to go ahead with it to ensure that the project was completed on time and that the client’s expectations were met. The project was eventually successfully completed and this was seen as a testament to my leadership and decision-making abilities."""</span>,</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"""There are several factors that contribute to an individual's success, such as hard work and dedication, effective communication skills, positive attitude, good time management, a clear vision and specific goals, problem-solving and decision-making skills, willingness to take risks, resilience and adaptability, prioritization and organization, proactivity, self-motivation, personal growth, and the ability to collaborate with others."""</span>,</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"""Cats and dogs are both beloved pets, but they have important differences. Dogs are typically more outgoing and energetic, while cats are considered more independent. Dogs tend to be more social and active, enjoying walks and playing with other animals. Cats, on the other hand, tend to be more solitary, preferring to relax and snuggle up in a warm spot. Dogs typically require more care and attention, while cats are more self-sufficient. Despite these differences, cats and dogs remain popular and loving pets."""</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="cell-29" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> transformers <span class="im">import</span> AutoTokenizer, AutoModelForCausalLM, pipeline</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>tokenizer <span class="op">=</span> AutoTokenizer.from_pretrained(<span class="st">"ahmedsamirio/Egyptian-Arabic-Translator-Llama-3-8B"</span>)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> AutoModelForCausalLM.from_pretrained(<span class="st">"ahmedsamirio/Egyptian-Arabic-Translator-Llama-3-8B"</span>, load_in_8bit<span class="op">=</span><span class="va">True</span>, device_map<span class="op">=</span><span class="st">"cuda"</span>)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>pipe <span class="op">=</span> pipeline(task<span class="op">=</span><span class="st">'text-generation'</span>, model<span class="op">=</span>model, tokenizer<span class="op">=</span>tokenizer)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-30" class="cell" data-execution_count="83">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>ar_template <span class="op">=</span> <span class="st">"""&lt;|begin_of_text|&gt;Below is an instruction that describes a task, paired with an input that provides further context. Write a response that appropriately completes the request.</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="st">### Instruction:</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="st">Translate the following text to Arabic.</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="st">### Input:</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="sc">{text}</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="st">### Response:</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>eg_template <span class="op">=</span> <span class="st">"""&lt;|begin_of_text|&gt;Below is an instruction that describes a task, paired with an input that provides further context. Write a response that appropriately completes the request.</span></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a><span class="st">### Instruction:</span></span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a><span class="st">Translate the following text to Egyptian Arabic.</span></span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a><span class="st">### Input:</span></span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a><span class="sc">{text}</span></span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a><span class="st">### Response:</span></span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_output(prompt, max_new_tokens):</span>
+<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a>    out <span class="op">=</span> pipe(prompt, max_new_tokens<span class="op">=</span>max_new_tokens, do_sample<span class="op">=</span><span class="va">False</span>, temperature<span class="op">=</span><span class="va">None</span>)</span>
+<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> out[<span class="dv">0</span>][<span class="st">'generated_text'</span>].split(<span class="st">"### Response:</span><span class="ch">\n</span><span class="st">"</span>)[<span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_ft_model_translations(text):</span>
+<span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a>    eg_text <span class="op">=</span> get_output(eg_template.<span class="bu">format</span>(text<span class="op">=</span>text), <span class="dv">512</span>)</span>
+<span id="cb15-29"><a href="#cb15-29" aria-hidden="true" tabindex="-1"></a>    translations <span class="op">=</span> {<span class="st">"eg"</span>: eg_text}</span>
+<span id="cb15-30"><a href="#cb15-30" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> translations</span>
+<span id="cb15-31"><a href="#cb15-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-32"><a href="#cb15-32" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_gpt4o_translations(text):</span>
+<span id="cb15-33"><a href="#cb15-33" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> client.chat.completions.create(</span>
+<span id="cb15-34"><a href="#cb15-34" aria-hidden="true" tabindex="-1"></a>      model<span class="op">=</span><span class="st">"gpt-4o"</span>,</span>
+<span id="cb15-35"><a href="#cb15-35" aria-hidden="true" tabindex="-1"></a>      messages<span class="op">=</span>[{<span class="st">"role"</span>: <span class="st">"system"</span>, <span class="st">"content"</span>: SYSTEM_PROMPT}, </span>
+<span id="cb15-36"><a href="#cb15-36" aria-hidden="true" tabindex="-1"></a>                {<span class="st">"role"</span>: <span class="st">"user"</span>, <span class="st">"content"</span>: <span class="ss">f"Translate the following text:</span><span class="ch">\n</span><span class="sc">{</span>text<span class="sc">}</span><span class="ss">"</span>}],</span>
+<span id="cb15-37"><a href="#cb15-37" aria-hidden="true" tabindex="-1"></a>      temperature<span class="op">=</span><span class="dv">1</span>,</span>
+<span id="cb15-38"><a href="#cb15-38" aria-hidden="true" tabindex="-1"></a>      max_tokens<span class="op">=</span><span class="dv">512</span>,</span>
+<span id="cb15-39"><a href="#cb15-39" aria-hidden="true" tabindex="-1"></a>      top_p<span class="op">=</span><span class="dv">1</span></span>
+<span id="cb15-40"><a href="#cb15-40" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb15-41"><a href="#cb15-41" aria-hidden="true" tabindex="-1"></a>    translations <span class="op">=</span> convert_text_to_dict(response.choices[<span class="dv">0</span>].message.content)</span>
+<span id="cb15-42"><a href="#cb15-42" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> translations</span>
+<span id="cb15-43"><a href="#cb15-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-44"><a href="#cb15-44" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compare_translations(text):</span>
+<span id="cb15-45"><a href="#cb15-45" aria-hidden="true" tabindex="-1"></a>    ft_translations <span class="op">=</span> get_ft_model_translations(text)</span>
+<span id="cb15-46"><a href="#cb15-46" aria-hidden="true" tabindex="-1"></a>    gpt4o_translations <span class="op">=</span> get_gpt4o_translations(text)</span>
+<span id="cb15-47"><a href="#cb15-47" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb15-48"><a href="#cb15-48" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Original Text:</span><span class="ch">\n</span><span class="st">"</span>)</span>
+<span id="cb15-49"><a href="#cb15-49" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(text)</span>
+<span id="cb15-50"><a href="#cb15-50" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>()</span>
+<span id="cb15-51"><a href="#cb15-51" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb15-52"><a href="#cb15-52" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'GPT-4o Translation:</span><span class="ch">\n</span><span class="st">'</span>)</span>
+<span id="cb15-53"><a href="#cb15-53" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(gpt4o_translations[<span class="st">'eg'</span>])</span>
+<span id="cb15-54"><a href="#cb15-54" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>()</span>
+<span id="cb15-55"><a href="#cb15-55" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb15-56"><a href="#cb15-56" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'Fintuned Model Translation:</span><span class="ch">\n</span><span class="st">'</span>)</span>
+<span id="cb15-57"><a href="#cb15-57" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(ft_translations[<span class="st">'eg'</span>])</span>
+<span id="cb15-58"><a href="#cb15-58" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="sample-1" class="level3">
+<h3 class="anchored" data-anchor-id="sample-1">Sample 1</h3>
+<div id="cell-32" class="cell" data-execution_count="74">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>compare_translations(alpaca_sample[<span class="dv">0</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Original Text:
+
+I had to make a difficult decision when I was working as a project manager at a construction company. I was in charge of a project that needed to be completed by a certain date in order to meet the client’s expectations. However, due to unexpected delays, we were not able to meet the deadline and so I had to make a difficult decision. I decided to extend the deadline, but I had to stretch the team’s resources even further and increase the budget. Although it was a risky decision, I ultimately decided to go ahead with it to ensure that the project was completed on time and that the client’s expectations were met. The project was eventually successfully completed and this was seen as a testament to my leadership and decision-making abilities.
+
+GPT-4o Translation:
+
+اضطريت آخد قرار صعب وأنا كنت شغال كمدير مشروع في شركة مقاولات. كنت مسؤول عن مشروع لازم يخلص في معاد معين عشان نرضي العميل. بس بسبب تأخيرات غير متوقعة، ماقدرناش نلتزم بالميعاد، فكان لازم آخد قرار صعب. قررت أمد الميعاد، بس كان لازم أضغط على فريق العمل وأزود الميزانية. رغم إن القرار كان محفوف بالمخاطر، قررت أمشي فيه عشان المشروع يخلص في وقته ونرضي العميل. في الآخر، المشروع نجح وتنفذ بنجاح وده كان شهادة على قدراتي في القيادة واتخاذ القرارات.
+
+Fintuned Model Translation:
+
+كان لازم أاخد قرار صعب لما كنت شغال كمدير مشروع في شركة بناء. كنت مسؤول عن مشروع كان محتاج يخلص في موعد معين عشان نوفر توقعات العميل. بس بسبب تأخيرات غير متوقعة، ما قدرتش نتوفر على الميعاد واضطرت أاخد قرار صعب. قررت أطول الميعاد، بس كان لازم أزود موارد الفريق أكتر وأزود الميزانية. رغم إن القرار كان محفوف بالمخاطر، قررت أتابع المهمة عشان أتأكد إن المشروع يخلص في الوقت المناسب وإن توقعات العميل تتحقق. المشروع خلص في النهاية بنجاح وده اتشاف كدليل على قيادتي وقدراتي في اتخاذ القرارات.
+</code></pre>
+</div>
+</div>
+</section>
+<section id="sample-2" class="level3">
+<h3 class="anchored" data-anchor-id="sample-2">Sample 2</h3>
+<div id="cell-34" class="cell" data-execution_count="84">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>compare_translations(alpaca_sample[<span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Original Text:
+
+There are several factors that contribute to an individual's success, such as hard work and dedication, effective communication skills, positive attitude, good time management, a clear vision and specific goals, problem-solving and decision-making skills, willingness to take risks, resilience and adaptability, prioritization and organization, proactivity, self-motivation, personal growth, and the ability to collaborate with others.
+
+GPT-4o Translation:
+
+في عوامل كتير بتساهم في نجاح الشخص، زي الشغل الجامد والاجتهاد، مهارات التواصل الفعّالة، النظرة الإيجابية، إدارة الوقت بشكل كويس، رؤية واضحة وأهداف محددة، مهارات حل المشاكل واتخاذ القرار، الرغبة في المخاطرة، المرونة والتكيف، الأولويات والتنظيم، المبادرة، التحفيز الذاتي، النمو الشخصي، والقدرة على التعاون مع الناس التانية.
+
+Fintuned Model Translation:
+
+فيه عوامل كتير بتساهم في نجاح الشخص، زي الشغل الجاد والتفاني، مهارات التواصل الفعّالة، المزاج الإيجابي، إدارة الوقت بشكل كويس، رؤية واضحة وأهداف محددة، مهارات حل المشاكل واتخاذ القرارات، استعداد لتحمل المخاطر، الصمود والقدرة على التكيف، الترتيب والتنظيم، الإقدام، التحفيز الذاتي، النمو الشخصي، والقدرة على التعاون مع الآخرين.
+</code></pre>
+</div>
+</div>
+</section>
+<section id="sample-3" class="level3">
+<h3 class="anchored" data-anchor-id="sample-3">Sample 3</h3>
+<div id="cell-36" class="cell" data-execution_count="85">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>compare_translations(alpaca_sample[<span class="dv">2</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Original Text:
+
+Cats and dogs are both beloved pets, but they have important differences. Dogs are typically more outgoing and energetic, while cats are considered more independent. Dogs tend to be more social and active, enjoying walks and playing with other animals. Cats, on the other hand, tend to be more solitary, preferring to relax and snuggle up in a warm spot. Dogs typically require more care and attention, while cats are more self-sufficient. Despite these differences, cats and dogs remain popular and loving pets.
+
+GPT-4o Translation:
+
+القطط والكلاب الحيوانات دي الاتنين محبوبين، بس في اختلافات مهمة بينهم. الكلاب عادةً بتكون أكثر انفتاح ونشاط، في حين إن القطط بتحب تستقل. الكلاب بتحب الاختلاط وبتكون نشيطة، بتمبسط من المشي واللعب مع الحيوانات التانية. لكن القطط بتميل للعزلة، وبتحب تسترخى وتتمدد في مكان دافئ. الكلاب بتطلب رعاية واهتمام أكتر، بس القطط بتعتمد على نفسها أكتر. رغم الاختلافات دي، القطط والكلاب لسه حيوانات أليفة محبوبة وشعبية.
+
+Fintuned Model Translation:
+
+القطط والكلاب هما حيوانات أليفة محبوبة، بس عندهم اختلافات مهمة. الكلاب عادةً بتكون أكتر نشاطًا وطاقة، والقطط بتعتبر أكتر استقلالية. الكلاب عادةً بتكون أكتر اجتماعية ونشطة، وبتستمتع بالمشي واللعب مع الحيوانات التانية. أما القطط، بتكون أكتر وحدة، وبتفضل تستريح وتدوس في مكان دافي. الكلاب عادةً محتاجة عناية أكتر، والقطط بتكون أكتر استقلالية. رغم الاختلافات دي، القطط والكلاب لسه حيوانات أليفة مشهورة ومحبوبة.
+</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="conclusion" class="level1">
+<h1>Conclusion</h1>
+<p>As you can see, the results are still not that great, however the finetuned model is almost catching up with GPT-4o, and I believe that with some minor tweaks in the finetuning methodology, we can achieve a performance close to that of GPT-4o.</p>
+</section>
+<section id="tldr" class="level1">
+<h1>TL;DR</h1>
+<ul>
+<li>Used GPT-4o to create translation pairs from English to Modern Standard Arabic and then to Egyptian Arabic.</li>
+<li>Generated a dataset from the OpenAssistant/oasst2 messages using GPT-4o and OpenAI’s batch API.</li>
+<li>Prepared and processed the dataset for fine-tuning.</li>
+<li>Fine-tuned Llama-3-8B using Axolotl, focusing on LoRA adapters and sample packing.</li>
+<li>Evaluated the fine-tuned model against GPT-4o using sample texts.</li>
+<li>Found that while the fine-tuned model isn’t perfect, it’s a significant step towards accessible Egyptian Arabic translations.</li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
