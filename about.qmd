@@ -4,16 +4,18 @@ image: profile.jpg
 about:
   template: jolla
   links:
-    - icon: twitter
-      text: Twitter
-      href: https://twitter.com
+    - icon: Twitter
+      text: twitter
+      href: https://x.com/ahmedsamir95_
     - icon: linkedin
       text: LinkedIn
-      href: https://linkedin.com
+      href: https://www.linkedin.com/in/ahmedsamir95/
     - icon: github
       text: Github
-      href: https://github.com
+      href: https://github.com/ahmedsamirio
 
 ---
 
-About this blog
+# Hi, I'm Ahmed Samir, a Data Scientist.
+
+I'm currently interested in LLM Applications, and will be sharing the things I'm currently learning in this blog.
